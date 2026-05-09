@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>锐翔电脑 - 纯净软件分享站</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+            background: linear-gradient(135deg, #c8e6c9 0%, #81c784 50%, #a5d6a7 100%);
+            min-height: 100vh;
+        }
+
+    /* 横幅 */
+    .hero {
+        text-align: center;
+        padding: 4rem 2rem;
+        color: #2e7d32;
+    }
+
+    .hero h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: #1b5e20;
+        font-weight: 700;
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+        color: #388e3c;
+    }
+
+    /* 分类标签 */
+    .categories {
+        max-width: 1200px;
+        margin: 0 auto 2rem;
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .category-btn {
+        padding: 0.6rem 1.8rem;
+        border: none;
+        background: rgba(255, 255, 255, 0.8);
+        color: #2e7d32;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-size: 1rem;
+        font-weight: 500;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .category-btn:hover,
+    .category-btn.active {
+        background: #4caf50;
+        color: white;
+        transform: scale(1.05);
+        box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+    }
+
+    /* 软件卡片网格 */
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem 3rem;
+    }
+
+    .software-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .software-card {
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s;
+    }
+
+    .software-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+    }
+
+    .card-body {
+        padding: 1.5rem;
+        text-align: center;
+    }
+
+    .card-body h3 {
+        font-size: 1.1rem;
+        color: #1b5e20;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+    }
+
+    .card-body .tag {
+        display: inline-block;
+        padding: 0.2rem 0.6rem;
+        background: linear-gradient(135deg, #c8e6c9, #a5d6a7);
+        color: #2e7d32;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        margin-bottom: 0.8rem;
+        font-weight: 500;
+    }
+
+    .card-body p {
+        color: #666;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin-bottom: 1rem;
+    }
+
+    .download-btn {
+        display: block;
+        width: 100%;
+        padding: 0.6rem;
+        background: linear-gradient(135deg, #66bb6a 0%, #43a047 100%);
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        transition: all 0.3s;
+        box-shadow: 0 3px 8px rgba(67, 160, 71, 0.3);
+    }
+
+    .download-btn:hover {
+        transform: scale(1.02);
+        box-shadow: 0 4px 12px rgba(67, 160, 71, 0.4);
+    }
+
+    /* 页脚 */
+    footer {
+        background: linear-gradient(135deg, #388e3c 0%, #2e7d32 100%);
+        text-align: center;
+        padding: 2rem;
+        color: white;
+    }
+
+    footer p {
+        opacity: 0.95;
+    }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .software-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 横幅 -->
+    <section class="hero">
+        <h1>纯净软件 安心下载</h1>
+        <p>软件全部指向官网链接、安全可靠</p>
+    </section>
+
+    <!-- 分类标签 -->
+    <div class="categories">
+        <button class="category-btn active" data-category="all">全部</button>
+        <button class="category-btn" data-category="social">社交通讯</button>
+        <button class="category-btn" data-category="game">游戏娱乐</button>
+        <button class="category-btn" data-category="video">影音播放</button>
+        <button class="category-btn" data-category="system">系统工具</button>
+        <button class="category-btn" data-category="office">办公效率</button>
+        <button class="category-btn" data-category="browser">浏览器</button>
+        <button class="category-btn" data-category="security">系统安全</button>
+        <button class="category-btn" data-category="ecommerce">电商软件</button>
+    </div>
+
+    <!-- 软件列表 -->
+    <div class="container">
+        <div class="software-grid" id="softwareGrid">
+            <!-- 软件卡片将通过 JavaScript 动态生成 -->
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <p>&copy; 2026 软件小屋 - 纯净软件分享平台 | 仅供学习交流</p>
+    </footer>
+
+    <script>
+        // 软件数据
+        const softwareData = [
+            {
+                name: "微信",
+                category: "social",
+                tag: "社交通讯",
+                desc: "腾讯即时通讯工具，朋友圈和支付",
+                icon: "images/wechat.png",
+                downloadUrl: "https://weixin.qq.com"
+            },
+            {
+                name: "QQ",
+                category: "social",
+                tag: "社交通讯",
+                desc: "腾讯QQ即时通讯软件",
+                icon: "images/qq.png"
+            },
+            {
+                name: "腾讯会议",
+                category: "social",
+                tag: "社交通讯",
+                desc: "腾讯云会议，远程办公利器",
+                downloadUrl: "https://meeting.tencent.com/"
+            },
+            {
+                name: "钉钉",
+                category: "social",
+                tag: "社交通讯",
+                desc: "阿里办公通讯平台，企业首选",
+                downloadUrl: "https://www.dingtalk.com/"
+            },
+            {
+                name: "抖音",
+                category: "social",
+                tag: "社交通讯",
+                desc: "字节跳动短视频社交平台",
+                downloadUrl: "https://www.douyin.com/"
+            },
+            {
+                name: "快手",
+                category: "social",
+                tag: "社交通讯",
+                desc: "短视频分享平台，记录生活",
+                downloadUrl: "https://www.kuaishou.com/"
+            },
+            {
+                name: "小红书",
+                category: "social",
+                tag: "社交通讯",
+                desc: "年轻人的生活方式分享社区",
+                downloadUrl: "https://www.xiaohongshu.com/"
+            },
+            {
+                name: "WeGame",
+                category: "game",
+                tag: "游戏娱乐",
+                desc: "腾讯游戏平台，游戏下载必备",
+                downloadUrl: "https://www.wegame.com/"
+            },
+            {
+                name: "Steam",
+                category: "game",
+                tag: "游戏娱乐",
+                desc: "全球最大游戏发行平台",
+                downloadUrl: "https://bai.steamchina.com/"
+            },
+            {
+                name: "PotPlayer",
+                category: "video",
+                tag: "影音播放",
+                desc: "功能强大的多媒体播放器",
+                downloadUrl: "https://potplayer.daum.net/"
+            },
+            {
+                name: "QQ音乐",
+                category: "video",
+                tag: "影音播放",
+                desc: "在线音乐播放器",
+                downloadUrl: "https://y.qq.com/"
+            },
+            {
+                name: "网易云音乐",
+                category: "video",
+                tag: "影音播放",
+                desc: "网易云音乐，发现好歌曲",
+                downloadUrl: "https://music.163.com/"
+            },
+            {
+                name: "酷我音乐",
+                category: "video",
+                tag: "影音播放",
+                desc: "酷我音乐，海量无损音质",
+                downloadUrl: "https://www.kuwo.cn/"
+            },
+            {
+                name: "酷狗音乐",
+                category: "video",
+                tag: "影音播放",
+                desc: "酷狗音乐，听见世界",
+                downloadUrl: "https://www.kugou.com/"
+            },
+            {
+                name: "WinRAR",
+                category: "system",
+                tag: "系统工具",
+                desc: "经典压缩软件，支持多种格式",
+                downloadUrl: "https://www.winrar.com.cn/"
+            },
+            {
+                name: "7-Zip",
+                category: "system",
+                tag: "系统工具",
+                desc: "免费开源的压缩软件",
+                downloadUrl: "https://www.7-zip.org/"
+            },
+            {
+                name: "图吧工具箱",
+                category: "system",
+                tag: "系统工具",
+                desc: "硬件检测工具箱，电脑维护必备",
+                downloadUrl: "http://www.tbtool.cn/"
+            },
+            {
+                name: "IDM",
+                category: "system",
+                tag: "系统工具",
+                desc: "Internet Download Manager，高速下载器",
+                downloadUrl: "https://www.internetdownloadmanager.com/"
+            },
+            {
+                name: "向日葵",
+                category: "system",
+                tag: "系统工具",
+                desc: "远程控制软件，远程协助神器",
+                downloadUrl: "https://sunlogin.oray.com/"
+            },
+            {
+                name: "WPS Office",
+                category: "office",
+                tag: "办公效率",
+                desc: "国产办公软件，轻便实用",
+                downloadUrl: "https://www.wps.cn/"
+            },
+            {
+                name: "LibreOffice",
+                category: "office",
+                tag: "办公效率",
+                desc: "免费开源办公套件，跨平台兼容",
+                downloadUrl: "https://www.libreoffice.org/"
+            },
+            {
+                name: "Chrome",
+                category: "browser",
+                tag: "浏览器",
+                desc: "谷歌官方浏览器，快速安全",
+                downloadUrl: "https://google.cn/chrome/safety/"
+            },
+            {
+                name: "Firefox",
+                category: "browser",
+                tag: "浏览器",
+                desc: "Mozilla出品，保护隐私",
+                downloadUrl: "https://www.mozilla.org/firefox/"
+            },
+            {
+                name: "QQ浏览器",
+                category: "browser",
+                tag: "浏览器",
+                desc: "腾讯出品，小窗口大世界",
+                downloadUrl: "https://browser.qq.com/"
+            },
+            {
+                name: "腾讯电脑管家",
+                category: "security",
+                tag: "系统安全",
+                desc: "腾讯出品，全面守护电脑安全",
+                downloadUrl: "https://guanjia.qq.com/"
+            },
+            {
+                name: "火绒安全",
+                category: "security",
+                tag: "系统安全",
+                desc: "轻量级安全软件，安静守护",
+                downloadUrl: "https://www.huorong.cn/"
+            },
+            {
+                name: "千牛",
+                category: "ecommerce",
+                tag: "电商软件",
+                desc: "阿里巴巴商家工作台，店铺管理必备",
+                downloadUrl: "https://work.taobao.com/download.html?spm=a21dvs.24173238.0.0.26381544mOQHYq"
+            },
+            {
+                name: "阿里旺旺",
+                category: "ecommerce",
+                tag: "电商软件",
+                desc: "淘宝买家卖家沟通工具",
+                downloadUrl: "https://pages.tmall.com/wow/qnww/act/index"
+            },
+            {
+                name: "1688电脑端",
+                category: "ecommerce",
+                tag: "电商软件",
+                desc: "阿里巴巴批发平台电脑客户端",
+                downloadUrl: "https://cxt.1688.com/shangjpc.html#"
+            },
+            {
+                name: "抖店",
+                category: "ecommerce",
+                tag: "电商软件",
+                desc: "抖音电商商家工作台",
+                downloadUrl: "https://im.jinritemai.com/download?btm_ppre=a0.b0.c0.d0&btm_pre=a390501.b667798.c0.d0&btm_show_id=bc762f55-9f1e-4c50-83ed-1a9c90ff6147"
+            },
+            {
+                name: "快手小店",
+                category: "ecommerce",
+                tag: "电商软件",
+                desc: "快手电商商家管理平台",
+                downloadUrl: "https://login.kwaixiaodian.com/?biz=zone&redirect_url=https%3A%2F%2Fs.kwaixiaodian.com%2F"
+            },
+            {
+                name: "拼多多商家版",
+                category: "ecommerce",
+                tag: "电商软件",
+                desc: "拼多多商家工作台",
+                downloadUrl: "https://mms.pinduoduo.com/login/?redirectUrl=https%3A%2F%2Fmms.pinduoduo.com%2F"
+            },
+            {
+                name: "番茄打印管家",
+                category: "ecommerce",
+                tag: "电商软件",
+                desc: "电商打印机管理软件",
+                downloadUrl: "https://gj.fanqie365.cn/"
+            }
+        ];
+
+        // 渲染软件卡片
+        function renderSoftware(category = 'all') {
+            const grid = document.getElementById('softwareGrid');
+            const filtered = category === 'all' 
+                ? softwareData 
+                : softwareData.filter(item => item.category === category);
+            
+            grid.innerHTML = filtered.map(item => {
+                const downloadLink = item.downloadUrl || '#';
+                
+                return `
+                <div class="software-card">
+                    <div class="card-body">
+                        <h3>${item.name}</h3>
+                        <span class="tag">${item.tag}</span>
+                        <p>${item.desc}</p>
+                        <a href="${downloadLink}" class="download-btn" target="_blank">立即下载</a>
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        // 分类按钮点击事件
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                renderSoftware(this.dataset.category);
+            });
+        });
+
+        // 初始化
+        renderSoftware();
+    </script>
+</body>
+</html>
